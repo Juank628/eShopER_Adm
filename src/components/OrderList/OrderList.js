@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Consumer } from "../context";
+import { Consumer } from "../../context";
 import axios from "axios";
+import "./Styles.css";
 
-export default class List extends Component {
+export default class OrderList extends Component {
   setData = (name, value) => {
     const data = {
       id: name,
