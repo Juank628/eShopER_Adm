@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Styles.css";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 export default class ProductList extends Component {
   state = {
@@ -59,7 +60,29 @@ export default class ProductList extends Component {
                 <td className="text-center">{item.quantity}</td>
                 <td className="text-center">{item.sale}</td>
                 <td className="text-center">
-                  <button className="btn btn-info">Editar</button>
+                  <NavLink
+                    to={
+                      "/editproduct" +
+                      "/" +
+                      item.id +
+                      "/" +
+                      item.name +
+                      "/" +
+                      item.cost +
+                      "/" +
+                      item.price +
+                      "/" +
+                      item.quantity +
+                      "/" +
+                      item.sale +
+                      "/" +
+                      item.family +
+                      "/" +
+                      item.subfamily
+                    }
+                  >
+                    <button className="btn btn-info">Editar</button>
+                  </NavLink>
                 </td>
               </tr>
             ))}
