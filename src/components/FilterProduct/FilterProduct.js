@@ -23,7 +23,11 @@ export default class FilterProduct extends Component {
   };
 
   setSearchProduct = e => {
-    this.setState({ SearchProduct: e.target.value });
+    if(e.target.value == ""){
+      this.setState({ SearchProduct: "todos" });
+    } else {
+      this.setState({ SearchProduct: e.target.value });
+    }
   };
 
   render() {
@@ -34,7 +38,7 @@ export default class FilterProduct extends Component {
           <div className="form-group mx-3">
             <label className="mr-2">Familia</label>
             <select className="form-control" onChange={this.setSearchFamily}>
-              <option value="%">Todos</option>
+              <option value="todos">Todos</option>
               <option value="tragos">Tragos</option>
               <option value="cigarros">Cigarros</option>
             </select>
@@ -43,15 +47,15 @@ export default class FilterProduct extends Component {
           <div className="form-group mx-3">
             <label className="mr-2">Oferta</label>
             <select className="form-control" onChange={this.setSearchSale}>
-              <option value="%">Todos</option>
-              <option value="enoferta">En oferta</option>
+              <option value="todos">Todos</option>
+              <option value="1">En oferta</option>
             </select>
           </div>
 
           <div className="form-group mx-3">
             <label className="mr-2">Stock</label>
             <select className="form-control" onChange={this.setSearchStock}>
-              <option value="%">Todos</option>
+              <option value="todos">Todos</option>
               <option value="alerta">Alerta</option>
             </select>
           </div>
@@ -61,7 +65,7 @@ export default class FilterProduct extends Component {
             <input
               className="form-control"
               type="text"
-              defaultValue="%"
+              defaultValue="todos"
               onChange={this.setSearchProduct}
             />
           </div>
