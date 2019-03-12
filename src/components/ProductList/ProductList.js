@@ -7,6 +7,8 @@ import EditProduct from "../EditProduct/EditProduct";
 export default class ProductList extends Component {
   state = {
     products: [],
+    totalStored: 0,
+    totalProfit: 0,
     showModal: false,
     isEdit: false,
     selectedProduct: {
@@ -38,6 +40,7 @@ export default class ProductList extends Component {
           this.setState({
             products: res.data
           });
+          this.calculateTotals()
         }
       });
   };
@@ -62,6 +65,19 @@ export default class ProductList extends Component {
     this.setState({
       showModal: false
     })
+  }
+
+  calculateTotals=()=>{
+    let totalStored = 0;
+    let totalProfit = 0;
+    this.state.products.forEach((item)=>{
+      totalStored += item.quantity * item.cost
+      totalProfit += item.quantity * (item.price-item.cost)
+    })
+   this.setState({
+      totalStored,
+      totalProfit
+   })
   }
 
   writeSuccess=()=>{
@@ -125,6 +141,17 @@ export default class ProductList extends Component {
             ))}
           </tbody>
         </table>
+        <div className="footer row">
+          <div className="col">
+          {`valor en stock: S/${Math.round(this.state.totalStored)}`}
+          </div>
+          <div className="col"> 
+          {`utilidad en stock: S/${Math.round(this.state.totalProfit)}`}
+          </div>
+          <div className="col"> 
+          {`margen promedio: ${(this.state.totalProfit/this.state.totalStored).toFixed(2)}`}
+          </div>
+        </div>
 
         <Modal show={this.state.showModal} closeModal={this.closeModal} title="">
           <EditProduct
