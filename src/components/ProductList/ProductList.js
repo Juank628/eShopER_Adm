@@ -1,11 +1,24 @@
 import React, { Component } from "react";
 import "./Styles.css";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import Modal from "../Modal/Modal";
+import EditProduct from "../EditProduct/EditProduct";
 
 export default class ProductList extends Component {
   state = {
-    products: []
+    products: [],
+    showModal: false,
+    isEdit: false,
+    selectedProduct: {
+      id: 0,
+      product: "",
+      cost: 0,
+      price: 0,
+      quantity: 0,
+      sale: 0,
+      family: "",
+      subfamily: ""
+    }
   };
 
   getProducts = () => {
@@ -22,10 +35,41 @@ export default class ProductList extends Component {
       )
       .then(res => {
         if (res.status > 199 && res.status < 300) {
-          this.setState({ products: res.data });
+          this.setState({
+            products: res.data
+          });
         }
       });
   };
+
+  openModal = (id, product, cost, price, quantity, sale, family, subfamily) => {
+    this.setState({
+      selectedProduct: {
+        id,
+        product,
+        cost,
+        price,
+        quantity,
+        sale,
+        family,
+        subfamily
+      },
+      showModal: true,
+    });
+  };
+
+  closeModal=()=>{
+    this.setState({
+      showModal: false
+    })
+  }
+
+  writeSuccess=()=>{
+    this.getProducts();
+    this.setState({
+      showModal: false
+    })
+  }
 
   componentDidUpdate(prevProps) {
     if (this.props !== prevProps) {
@@ -44,7 +88,7 @@ export default class ProductList extends Component {
               <th scope="col">Costo</th>
               <th scope="col">Precio</th>
               <th scope="col">Cantidad</th>
-              <th scope="col">Ofera</th>
+              <th scope="col">Oferta</th>
               <th scope="col">Editar</th>
             </tr>
           </thead>
@@ -60,34 +104,42 @@ export default class ProductList extends Component {
                 <td className="text-center">{item.quantity}</td>
                 <td className="text-center">{item.sale}</td>
                 <td className="text-center">
-                  <NavLink
-                    to={
-                      "/editproduct" +
-                      "/" +
-                      item.id +
-                      "/" +
-                      item.name +
-                      "/" +
-                      item.cost +
-                      "/" +
-                      item.price +
-                      "/" +
-                      item.quantity +
-                      "/" +
-                      item.sale +
-                      "/" +
-                      item.family +
-                      "/" +
-                      item.subfamily
-                    }
+                  <button
+                    className="btn btn-info"
+                    onClick={this.openModal.bind(
+                      this,
+                      item.id,
+                      item.name,
+                      item.cost,
+                      item.price,
+                      item.quantity,
+                      item.sale,
+                      item.family,
+                      item.subfamily,
+                    )}
                   >
-                    <button className="btn btn-info">Editar</button>
-                  </NavLink>
+                    Editar
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+        <Modal show={this.state.showModal} closeModal={this.closeModal} title="">
+          <EditProduct
+            id={this.state.selectedProduct.id}
+            product={this.state.selectedProduct.product}
+            cost={this.state.selectedProduct.cost}
+            price={this.state.selectedProduct.price}
+            quantity={this.state.selectedProduct.quantity}
+            sale={this.state.selectedProduct.sale}
+            family={this.state.selectedProduct.family}
+            subfamily={this.state.selectedProduct.subfamily}
+            isEdit={true}
+            writeSuccess={this.writeSuccess}
+          />
+        </Modal>
       </React.Fragment>
     );
   }

@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import "./Styles.css";
 import { NavLink } from "react-router-dom";
+import Modal from "../Modal/Modal";
+import EditProduct from "../EditProduct/EditProduct";
 
 export default class FilterProduct extends Component {
   state = {
     searchFamily: "todos",
     searchSale: "todos",
     searchStock: "todos",
-    SearchProduct: "todos"
+    SearchProduct: "todos",
+    showModal: false
   };
 
   setSearchFamily = e => {
@@ -30,11 +33,23 @@ export default class FilterProduct extends Component {
     }
   };
 
+  closeModal=()=>{
+    this.setState({
+      showModal: false
+    })
+  }
+
+  openModal=()=>{
+    this.setState({
+      showModal: true
+    })
+  }
+
   render() {
     const {searchFamily,searchSale,searchStock,SearchProduct} = this.state
     return (
       <React.Fragment>
-        <form className="form-inline my-2">
+        <form className="form-inline my-2 fromFont">
           <div className="form-group mx-3">
             <label className="mr-2">Familia</label>
             <select className="form-control" onChange={this.setSearchFamily}>
@@ -77,7 +92,30 @@ export default class FilterProduct extends Component {
               </button>
             </NavLink>
           </div>
+
+          <div className="form-group mx-3">
+            <button className="btn btn-danger" type="button" onClick={this.openModal}>
+              +
+            </button>
+          </div>
+
         </form>
+
+        <Modal show={this.state.showModal} closeModal={this.closeModal} title="">
+          <EditProduct
+            id={0}
+            product={""}
+            cost={0}
+            price={0}
+            quantity={0}
+            sale={0}
+            family={""}
+            subfamily={""}
+            isEdit={false}
+            writeSuccess={this.closeModal}
+          />
+        </Modal>
+
       </React.Fragment>
     );
   }

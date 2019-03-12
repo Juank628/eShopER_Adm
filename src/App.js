@@ -7,7 +7,6 @@ import Navbar from "./components/Navbar/Navbar";
 import { Route, HashRouter } from "react-router-dom";
 import pOrderList from "./Pages/pOrderList";
 import pProductList from "./Pages/pProductList";
-import pEditProduct from "./Pages/pEditProduct";
 
 class App extends Component {
   render() {
@@ -21,11 +20,6 @@ class App extends Component {
               path="/products/:family/:sale/:stock/:product"
               to
               component={pProductList}
-            />
-            <Route
-              path="/editproduct/:id/:product/:cost/:price/:quantity/:sale/:family/:subfamily"
-              to
-              component={pEditProduct}
             />
           </div>
         </Provider>

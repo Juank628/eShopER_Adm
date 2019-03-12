@@ -18,6 +18,20 @@ export default class EditProduct extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  createData = () => {
+    const data = this.state;
+    axios
+      .post(
+        "https://www.elroblemarket.com/laravelApp/eShopBackend/public/api/createproduct",
+        { data }
+      )
+      .then(res => {
+        if (res.status > 199 && res.status < 300) {
+          this.props.writeSuccess();
+        }
+      });
+  };
+
   updateData = () => {
     const data = this.state;
     axios
@@ -27,7 +41,7 @@ export default class EditProduct extends Component {
       )
       .then(res => {
         if (res.status > 199 && res.status < 300) {
-          console.log(res.data);
+          this.props.writeSuccess();
         }
       });
   };
@@ -47,8 +61,13 @@ export default class EditProduct extends Component {
 
   render() {
     return (
-      <form className="form border rounded px-5 pb-5 pt-3 mt-2">
-        <h3>Editar producto</h3>
+      <form className="form border rounded px-5 pb-5 pt-3">
+        {this.props.isEdit ? (
+          <h3>Editar producto</h3>
+        ) : (
+          <h3>Agregar producto</h3>
+        )}
+
         <p className="text-right">id: {this.props.id}</p>
 
         <div className="form-group mt-2">
@@ -103,7 +122,7 @@ export default class EditProduct extends Component {
             <input
               type="number"
               className="form-control"
-              Name="price"
+              name="price"
               defaultValue={this.props.price}
               onChange={this.setField}
             />
@@ -124,30 +143,35 @@ export default class EditProduct extends Component {
 
           <div className="form-group col">
             <label>Oferta</label>
-            <select className="form-control" name="sale" onChange={this.setField}>
-              <option
-                value="0"
-                selected={this.props.sale === "0" ? "selected" : null}
-              >
-                No
-              </option>
-              <option
-                value="1"
-                selected={this.props.sale === "1" ? "selected" : null}
-              >
-                Si
-              </option>
+            <select
+              className="form-control"
+              name="sale"
+              defaultValue={this.props.sale}
+              onChange={this.setField}
+            >
+              <option value="0">No</option>
+              <option value="1">Si</option>
             </select>
           </div>
         </div>
 
-        <button
-          type="button"
-          className="btn btn-success btn-block mt-3"
-          onClick={this.updateData}
-        >
-          Aceptar
-        </button>
+        {this.props.isEdit ? (
+          <button
+            type="button"
+            className="btn btn-success btn-block mt-3"
+            onClick={this.updateData}
+          >
+            Aceptar
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-danger btn-block mt-3"
+            onClick={this.createData}
+          >
+            Agregar
+          </button>
+        )}
       </form>
     );
   }
