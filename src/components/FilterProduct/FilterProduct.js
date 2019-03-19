@@ -56,6 +56,8 @@ export default class FilterProduct extends Component {
               <option value="todos">Todos</option>
               <option value="tragos">Tragos</option>
               <option value="cigarros">Cigarros</option>
+              <option value="bebidas">Bebidas</option>
+              <option value="golosinas">Golosinas</option>
             </select>
           </div>
 
