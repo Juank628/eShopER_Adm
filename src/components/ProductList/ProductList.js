@@ -29,6 +29,8 @@ export default class ProductList extends Component {
         "https://www.elroblemarket.com/laravelApp/eShopBackend/public/api/search/" +
           this.props.family +
           "/" +
+          "todos" +
+          "/" +
           this.props.sale +
           "/" +
           this.props.stock +

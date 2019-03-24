@@ -38,6 +38,7 @@ export default class OrderList extends Component {
                     <th scope="col">Producto</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
+                    <th scope="col">Ubicacion</th>
                     <th scope="col">Fecha/Hora</th>
                     <th scope="col">Estado</th>
                   </tr>
@@ -54,6 +55,16 @@ export default class OrderList extends Component {
                       <td>{item.name}</td>
                       <td>{item.quantity}</td>
                       <td>{item.price}</td>
+                      <td>
+                        <a
+                          target="_blank"
+                          href={
+                            "https://www.google.com/maps/place/" + item.location
+                          }
+                        >
+                          {item.location}
+                        </a>
+                      </td>
                       <td>{item.created_at}</td>
                       <td>
                         <select
