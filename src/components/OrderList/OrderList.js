@@ -38,8 +38,8 @@ export default class OrderList extends Component {
                     <th scope="col">Producto</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
-                    <th scope="col">Ubicacion</th>
                     <th scope="col">Fecha/Hora</th>
+                    <th scope="col">Ubicacion</th>
                     <th scope="col">Estado</th>
                   </tr>
                 </thead>
@@ -55,17 +55,32 @@ export default class OrderList extends Component {
                       <td>{item.name}</td>
                       <td>{item.quantity}</td>
                       <td>{item.price}</td>
+                      <td>{item.created_at}</td>
                       <td>
                         <a
                           target="_blank"
                           href={
-                            "https://www.google.com/maps/place/" + item.location
+                            "https://www.google.com/maps/place/" +
+                            item.location.split("/")[0]
                           }
                         >
-                          {item.location}
+                          {item.location.split("/")[1] < 3000 ? (
+                            <button
+                              title={item.location.split("/")[1]}
+                              className="btn btn-success btn-sm"
+                            >
+                              Mapa
+                            </button>
+                          ) : (
+                            <button
+                              title={item.location.split("/")[1]}
+                              className="btn btn-danger btn-sm"
+                            >
+                              Mapa
+                            </button>
+                          )}
                         </a>
                       </td>
-                      <td>{item.created_at}</td>
                       <td>
                         <select
                           value={item.status}
